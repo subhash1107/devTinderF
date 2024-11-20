@@ -1,9 +1,19 @@
 import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Body from './Body'
+import Login from './Login'
+import Profile from './Profile'
 
 const App = () => {
-  return (
-    <h1 className='bg-red-200 font-bold text-3xl text-center'>Hello world</h1>
-  )
-}
+  return (<>
+  <BrowserRouter basename='/'>
+  <Routes>
+  <Route path='/' element={<Body/>}>
+    <Route path='/login' element={<Login/>}/>
+    <Route path='/profile' element={<Profile/>}/>
+  </Route>
+</Routes>
+</BrowserRouter>
+</>)}
 
 export default App
