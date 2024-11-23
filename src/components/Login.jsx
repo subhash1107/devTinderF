@@ -1,17 +1,27 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
+import { useNavigate } from 'react-router';
+import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
-    const [eMail, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [eMail, setEmail] = useState("subhash@gmail.com");
+    const [password, setPassword] = useState("Subhash@123");
+    const [error,setError] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogin = async ()=>{
       try {
-        const res = await axios.post("http://localhost:7777/login",{eMail:eMail,password:password,},{withCredentials:true})
-        console.log(res);
+        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,},{withCredentials:true})
+        dispatch(addUser(res.data))
+        navigate("/feed")
         
       } catch (err) {
-        console.log(err);
+        setError(err?.response?.data || "Something went wrong")
+        // console.log(err);
+        
         
       }
     }
@@ -58,6 +68,7 @@ const Login = () => {
 
   />
 </label>
+<p className='text-red-600'>{error}</p>
     <div className="card-actions justify-center">
       <button className="btn btn-primary" onClick={handleLogin}>login</button>
     </div>
