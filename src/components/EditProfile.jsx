@@ -57,7 +57,7 @@ const EditProfile = ({ user }) => {
               <input
                 type="text"
                 id="editfirstname"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50 "
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -65,7 +65,7 @@ const EditProfile = ({ user }) => {
               <input
                 type="text"
                 id="editlastname"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -73,7 +73,7 @@ const EditProfile = ({ user }) => {
               <input
                 type="Number"
                 id="editfirstname"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
               />{" "}
@@ -125,7 +125,7 @@ const EditProfile = ({ user }) => {
               <input
                 type="text"
                 id="editphoto"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50"
                 value={photoUrl}
                 onChange={(e) => setPhotoUrl(e.target.value)}
               />
@@ -133,14 +133,14 @@ const EditProfile = ({ user }) => {
               <input
                 type="text"
                 id="editskill"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50"
                 value={skills}
                 onChange={(e) => setSkills(e.target.value)}
               />
               <label htmlFor="editabout">About :</label>
               <textarea
                 id="editabout"
-                className="grow input input-bordered w-full"
+                className="grow input input-bordered w-full bg-slate-50"
                 value={about}
                 onChange={(e) => setAbout(e.target.value)}
               />

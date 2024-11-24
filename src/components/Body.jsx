@@ -29,7 +29,7 @@ const Body = () => {
     getUser();
   },[])
   return (
-    <div>
+    <div className=" relative h-[100%]">
       <Navbar />
       <Outlet />
       <Footer className='absolute bottom-0' />
