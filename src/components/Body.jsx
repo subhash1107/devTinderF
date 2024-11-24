@@ -32,7 +32,7 @@ const Body = () => {
     <div>
       <Navbar />
       <Outlet />
-      <Footer />
+      <Footer className='absolute bottom-0' />
     </div>
   );
 };

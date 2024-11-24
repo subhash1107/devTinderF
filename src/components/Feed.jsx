@@ -8,28 +8,29 @@ import UserCard from './UserCard'
 const Feed = () => {
     const dispatch = useDispatch();
     const feed = useSelector((store)=>{return store.feed})
-    // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2)); 
-
-    
+    // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));  
+       
     const feedData = async ()=>{
         try {
             if(feed) return;
             const res = await axios.get(BASE_URL + "/user/feed",{withCredentials:true})
-            dispatch(addFeed(res.data.message))  
-            // console.log(res.data.message);
+            dispatch(addFeed(res.data.message));  
             
         } catch (err) {
             console.log(err);
             
         }
- 
+        
     }
+     
     useEffect(()=>{
         feedData()
-    },[])
+    },[feed])
+
   return (<>
-    <UserCard/>
-  </>)
-}
+  <div className='flex justify-center p-5 bg-slate-50'>
+    {feed&&<UserCard user = {feed[0]}/>}
+    </div>
+    </>)}
 
 export default Feed

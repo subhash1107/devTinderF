@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore";
 import Feed from "./components/Feed";
+import Testing from "./components/Testing";
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
               <Route path="/feed" element={<Feed/>}/>
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/testing" element={<Testing />} />
             </Route>
           </Routes>
         </BrowserRouter>
