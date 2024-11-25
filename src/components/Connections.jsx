@@ -7,7 +7,6 @@ import { addConnection } from "../utils/connectionSlice";
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connections);
-  connections && console.log(connections);
 
   const fetchConnections = async () => {
     try {
@@ -39,9 +38,9 @@ const Connections = () => {
     <div className=" ">
     <h2 className="text-3xl font-bold my-6 text-center ">Connections</h2>
       {connections.map((connection) => {
-        const{firstName, lastName, age, about, gender, photoUrl} =connection;
-        return (<div className="">
-          <div className="card card-side bg-slate-100 shadow-xl md:max-w-[50%] mx-auto my-4">
+        const{_id,firstName, lastName, age, about, gender, photoUrl} =connection;
+        return (
+          <div key={_id} className="card card-side bg-slate-100 shadow-xl md:max-w-[50%] mx-auto my-4">
             <figure>
               <img
                 src={photoUrl}
@@ -56,7 +55,7 @@ const Connections = () => {
 
             </div>
           </div>
-          </div>
+          
         );
       })}
     </div>
