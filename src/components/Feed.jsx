@@ -8,8 +8,7 @@ import UserCard from './UserCard'
 const Feed = () => {
     const dispatch = useDispatch();
     const feed = useSelector((store)=>{return store.feed})
-    // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));  
-       
+    // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));     
     const feedData = async ()=>{
         try {
             if(feed) return;
@@ -25,7 +24,18 @@ const Feed = () => {
      
     useEffect(()=>{
         feedData()
-    },[feed])
+    },[])
+
+    if(!feed) return;
+    if(feed.length===0){
+        return(<>
+                    <div className="toast toast-center toast-middle">
+          <div className="alert alert-info">
+            <span>No user found in you feed!!</span>
+          </div>
+        </div>
+        </>)
+    }
 
   return (<>
   <div className='flex justify-center p-5 bg-slate-50'>

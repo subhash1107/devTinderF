@@ -6,8 +6,11 @@ import { useNavigate } from 'react-router';
 import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
-    const [eMail, setEmail] = useState("subhash@gmail.com");
-    const [password, setPassword] = useState("Subhash@123");
+    const [eMail, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [firstName, setFirstname] = useState("");
+    const [lastName, setLastname] = useState("");
+    const [isSignup,setIsSignup] = useState(false)
     const [error,setError] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -17,19 +20,49 @@ const Login = () => {
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,},{withCredentials:true})
         dispatch(addUser(res.data))
         navigate("/feed")
-        
+        setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
-        // console.log(err);
-        
+        // console.log(err);   
+      }
+    }
+    const handleSignup = async ()=>{
+      try {
+        const res = await axios.post(BASE_URL+"/signup",{firstName:firstName,lastName:lastName,eMail:eMail,password:password},{withCredentials:true})
+        setError("");
+        dispatch(addUser(res.data))
+        navigate("/profile")
+      } catch (error) {
+        setError(error?.response?.data ||"Something went wrong")
+        console.log(error);
         
       }
     }
   return (
     <div>
-    <div className="card bg-base-100 w-96 shadow-xl mx-auto">
+    <div className="card bg-base-100 w-96 shadow-xl mx-auto my-6">
   <div className="card-body">
-    <h2 className="card-title mx-auto">LOGIN</h2>
+    <h2 className="card-title mx-auto">{isSignup?"SIGN UP":"LOGIN"}</h2>
+    
+   {isSignup&&(<><label className="input input-bordered flex items-center gap-2">
+  <input 
+  type="text" 
+  className="grow" 
+  placeholder="First Name"
+  value={firstName}
+  onChange={(e)=>setFirstname(e.target.value)}
+   />
+</label>
+   <label className="input input-bordered flex items-center gap-2">
+
+  <input 
+  type="text" 
+  className="grow" 
+  placeholder="Last Name"
+  value={lastName}
+  onChange={(e)=>setLastname(e.target.value)}
+   />
+</label></>)}
    <label className="input input-bordered flex items-center gap-2">
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -63,6 +96,7 @@ const Login = () => {
   <input 
   type="password" 
   className="grow"
+  placeholder='password'
   value={password}
   onChange={(e)=>setPassword(e.target.value)}
 
@@ -70,8 +104,13 @@ const Login = () => {
 </label>
 <p className='text-red-600'>{error}</p>
     <div className="card-actions justify-center">
-      <button className="btn btn-primary" onClick={handleLogin}>login</button>
+      {isSignup?<button className="btn btn-primary" onClick={handleSignup}>sign up</button>:
+      <button className="btn btn-primary" onClick={handleLogin}>login</button>}
     </div>
+    <p
+    className='text-blue-400 underline cursor-pointer text-center' 
+    onClick={()=>setIsSignup(!isSignup)}
+    >{isSignup?"Existing User? Login":"New User? Sign Up"}</p>
   </div>
 </div>
     </div>

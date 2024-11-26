@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
@@ -10,20 +10,20 @@ import Testing from "./components/Testing";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 
-
 const App = () => {
   return (
     <>
       <Provider store={appStore()}>
         <BrowserRouter basename="/">
           <Routes>
+            <Route path="/" element={<Navigate to="/feed" />} />
             <Route path="/" element={<Body />}>
-              <Route path="/feed" element={<Feed/>}/>
-              <Route path="/login" element={<Login />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/connections" element={<Connections/>} />
-              <Route path="/requests" element={<Requests/>} />
-              <Route path="/testing" element={<Testing />} />
+              <Route path="feed" element={<Feed />} />
+              <Route path="login" element={<Login />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="connections" element={<Connections />} />
+              <Route path="requests" element={<Requests />} />
+              <Route path="testing" element={<Testing />} />
             </Route>
           </Routes>
         </BrowserRouter>

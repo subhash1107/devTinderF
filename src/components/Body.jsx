@@ -10,29 +10,32 @@ import { addUser } from "../utils/userSlice";
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userData = useSelector((store)=>store.user)
-  
-  const getUser = async ()=>{
+  const userData = useSelector((store) => store.user);
+
+  const getUser = async () => {
     try {
-      if(userData) return;
-      const user = await axios.get(BASE_URL + "/profile/view",{withCredentials:true});
-      dispatch(addUser(user.data))       
+      if (userData) return;
+      const user = await axios.get(BASE_URL + "/profile/view", {
+        withCredentials: true,
+      });
+      dispatch(addUser(user.data));
     } catch (err) {
-      if(err.status){
-        navigate("/login")
+      if (err.status) {
+        navigate("/login");
       }
       console.log(err);
-      
     }
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
     getUser();
-  },[])
+  }, []);
   return (
-    <div className=" relative h-[100%]">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Outlet />
-      <Footer className='absolute bottom-0' />
+      <div className="flex-grow">
+        <Outlet />
+      </div>
+      <Footer className="mt-auto" />
     </div>
   );
 };
