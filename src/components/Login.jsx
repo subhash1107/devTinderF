@@ -2,8 +2,9 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { BASE_URL } from '../utils/constants';
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
     const [eMail, setEmail] = useState("");
@@ -12,8 +13,10 @@ const Login = () => {
     const [lastName, setLastname] = useState("");
     const [isSignup,setIsSignup] = useState(false)
     const [error,setError] = useState("");
+    const [seePassword,setSeePassword] = useState(false) 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
 
     const handleLogin = async ()=>{
       try {
@@ -82,7 +85,7 @@ const Login = () => {
   onChange={(e)=>setEmail(e.target.value)}
    />
 </label>
-<label className="input input-bordered flex items-center gap-2">
+<label className="input input-bordered flex items-center gap-2 relative">
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 16 16"
@@ -93,8 +96,16 @@ const Login = () => {
       d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
       clipRule="evenodd" />
   </svg>
+  {seePassword?<FaRegEye 
+  className=' opacity-70 absolute right-3 cursor-pointer'
+    onClick={()=>setSeePassword(!seePassword)}
+  />:<FaRegEyeSlash
+    className='opacity-70 absolute right-3 cursor-pointer'
+    onClick={()=>setSeePassword(!seePassword)}
+
+  />}
   <input 
-  type="password" 
+  type={seePassword?"text":"password"} 
   className="grow"
   placeholder='password'
   value={password}
@@ -110,7 +121,7 @@ const Login = () => {
     <p
     className='text-blue-400 underline cursor-pointer text-center' 
     onClick={()=>setIsSignup(!isSignup)}
-    >{isSignup?"Existing User? Login":"New User? Sign Up"}</p>
+    >{isSignup?"Existing User? Login here":"New User? Sign Up here"}</p>
   </div>
 </div>
     </div>
