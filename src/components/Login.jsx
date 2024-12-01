@@ -35,8 +35,9 @@ const Login = () => {
     const handleSignup = async ()=>{
       try {
         const res = await axios.post(BASE_URL+"/signup",{firstName:firstName,lastName:lastName,eMail:eMail,password:password},{withCredentials:true})
+        localStorage.setItem('token1', res.data.token);
         setError("");
-        dispatch(addUser(res.data))
+        dispatch(addUser(res.data.data))
         navigate("/profile")
       } catch (error) {
         setError(error?.response?.data ||"Something went wrong")
