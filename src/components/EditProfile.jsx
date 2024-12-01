@@ -10,7 +10,7 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user.lastName);
   const [age, setAge] = useState(user.age);
   const [gender, setGender] = useState(user.gender);
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
+  const [photo, setPhoto] = useState(null);
   const [about, setAbout] = useState(user.about);
   const [skills, setSkills] = useState(
     user.skills ? user.skills.join(", ") : ""
@@ -22,27 +22,40 @@ const EditProfile = ({ user }) => {
 
   const saveDetails = async () => {
     try {
+      const formData = new FormData();
       const skillsArray =
         skills.length > 0 ? skills.split(",").map((skill) => skill.trim()) : [];
-      const res = await axios.patch(
-        BASE_URL + "/profile/edit",
-        {
-          firstName,
-          lastName,
-          age,
-          gender,
-          photoUrl,
-          about,
-          skills: skillsArray,
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("age", age);
+      formData.append("gender", gender);
+      formData.append("about", about);
+      formData.append("skills", JSON.stringify(skillsArray));
+
+      if (photo) {
+        formData.append("photo", photo);
+      }else{console.log("no photo append");
+      }
+          
+      const token = localStorage.getItem('token1');
+      if(token){
+      const res = await axios.patch(BASE_URL + "/profile/edit", formData, {
+        headers: { 
+          "Content-Type": "multipart/form-data" ,
+          Authorization:`Bearer ${token}`,
         },
-        { withCredentials: true }
-      );
-      dispatch(addUser(res.data));
+        withCredentials: true,
+      });
+      
+      
+      dispatch(addUser(res.data));}
       setError("");
       setToast(true);
-      setTimeout(()=>{setToast(false)},2000)
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     } catch (error) {
-      setError(error.message);
+      setError(error?.response?.data || "something went wrong ");
     }
   };
 
@@ -121,14 +134,27 @@ const EditProfile = ({ user }) => {
                   </div>
                 </div>
               </div>
-              <label htmlFor="editphoto">Photo URL :</label>
-              <input
-                type="text"
-                id="editphoto"
-                className="grow input input-bordered w-full bg-slate-50"
-                value={photoUrl}
-                onChange={(e) => setPhotoUrl(e.target.value)}
-              />
+              <label
+                htmlFor="editphoto"
+                className="block text-gray-700 font-medium mb-2"
+              >
+                Photo URL :
+              </label>
+              <div className="relative">
+                <button
+                  type="button"
+                  className="absolute inset-0 w-full h-full bg-slate-200 border border-slate-300 rounded-md text-gray-700 flex items-center justify-center"
+                  onClick={() => document.getElementById("editphoto").click()}
+                >
+                  Choose a File
+                </button>
+                <input
+                  type="file"
+                  id="editphoto"
+                  className="opacity-0 w-full h-full cursor-pointer"
+                  onChange={(e) => setPhoto(e.target.files[0])}
+                />
+              </div>
               <label htmlFor="editskill">Skills :</label>
               <input
                 type="text"
@@ -159,18 +185,20 @@ const EditProfile = ({ user }) => {
             firstName,
             lastName,
             gender,
-            photoUrl,
+            photoUrl: photo ? URL.createObjectURL(photo) : user.photoUrl,
             about,
             age,
             skills: skills.split(",").map((skill) => skill.trim()),
           }}
         />
       </div>
-    {toast&&<div className="toast toast-top toast-center">
-        <div className="alert alert-success">
-          <span>You have updated your profile.</span>
+      {toast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>You have updated your profile.</span>
+          </div>
         </div>
-      </div>}
+      )}
     </>
   );
 };

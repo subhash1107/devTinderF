@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useEffect } from 'react'
-import { BASE_URL } from '../utils/constants'
+import {  BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
 import UserCard from './UserCard'
@@ -11,9 +11,19 @@ const Feed = () => {
     // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));     
     const feedData = async ()=>{
         try {
+            const token = localStorage.getItem('token1');
+            // const token = Cookies.get("token")
             if(feed) return;
-            const res = await axios.get(BASE_URL + "/user/feed",{withCredentials:true})
-            dispatch(addFeed(res.data.message));  
+            if(token){
+                const res = await axios.get(BASE_URL + "/user/feed",{
+                    headers:{
+                        Authorization:`Bearer ${token}`,
+                    },
+                    withCredentials:true})
+                dispatch(addFeed(res.data.message));  
+            }else{
+                return "there is no token"
+            }
             
         } catch (err) {
             console.log(err);
@@ -22,9 +32,15 @@ const Feed = () => {
         
     }
      
-    useEffect(()=>{
-        feedData()
-    },[])
+    useEffect(() => {
+        // Check if there's a token in localStorage
+        const token = localStorage.getItem('token1');
+        if (token) {
+          // If a token is found, attempt to fetch user data or feed
+          feedData();
+        }
+      }, []); // Empty array means this runs once when the component mounts
+      
 
     if(!feed) return;
     if(feed.length===0){

@@ -5,6 +5,7 @@ import { addUser } from '../utils/userSlice';
 import { useLocation, useNavigate } from 'react-router';
 import { BASE_URL } from '../utils/constants';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
+import Cookies from 'js-cookie';
 
 const Login = () => {
     const [eMail, setEmail] = useState("");
@@ -20,13 +21,15 @@ const Login = () => {
 
     const handleLogin = async ()=>{
       try {
-        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,},{withCredentials:true})
-        dispatch(addUser(res.data))
+        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,},{withCredentials:true});
+         localStorage.setItem('token1', res.data.token);
+        // Cookies.set("token1",res.data.token)
+        dispatch(addUser(res.data.user))
         navigate("/feed")
         setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
-        // console.log(err);   
+        console.log("error ",err);   
       }
     }
     const handleSignup = async ()=>{

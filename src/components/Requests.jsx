@@ -7,9 +7,13 @@ import { addRequest, removeRequest } from "../utils/requestSlice";
 const Requests = () => {
   const dispatch = useDispatch();
   const foundRequests = useSelector((store) => store.requests);
+  const token = localStorage.getItem('token1');
 
   const fetchRequests = async () => {
     const res = await axios.get(BASE_URL + "/user/requests", {
+      headers:{
+        Authorization:`Bearer ${token}`,
+    },
       withCredentials: true,
     });
     dispatch(addRequest(res.data));
@@ -20,9 +24,15 @@ const Requests = () => {
   }, []);
   
   const handleRequest = async (status,_id)=>{
-     await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{withCredentials:true})
+   
+    if(token){
+     await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{
+      headers:{
+        Authorization:`Bearer ${token}`,
+    },
+    withCredentials:true})
      dispatch(removeRequest(_id))
-  }
+  }}
 
   if (!foundRequests) return;
   if (foundRequests.length === 0) {
