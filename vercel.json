@@ -1,11 +1,16 @@
 {
     "routes": [
-      { "src": "/", "dest": "/" },
-      { "src": "/feed", "dest": "/" },
-      { "src": "/login", "dest": "/" },
-      { "src": "/profile", "dest": "/" },
-      { "src": "/connections", "dest": "/" },
-      { "src": "/requests", "dest": "/" },
       { "src": "/(.*)", "dest": "/" }
+    ],
+    "headers": [
+      {
+        "source": "/(.*)",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "text/javascript"
+          }
+        ]
+      }
     ]
   }
