@@ -6,30 +6,35 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { setLoading } from "../utils/loadingSlice";
+import Loading from "./Loading";
 
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user);
+  const isLoading = useSelector((store)=>store.loading.isLoading)
   const location = useLocation();
 
   const getUser = async () => {
     try {
+      // dispatch(setLoading(true))
       if (userData || location.pathname==="/login") return;
-      const user = await axios.get(BASE_URL + "/profile/view", {
-        withCredentials: true,
-      });
+      const user = await axios.get(BASE_URL + "/profile/view",);
       dispatch(addUser(user.data));
     } catch (err) {
       if (err.status) {
         navigate("/login");
       }
       console.log(err);
+    } finally {
+      // dispatch(setLoading(false))
     }
   };
   useEffect(() => {
     getUser();
   }, []);
+  // if(isLoading) return <Loading/>
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

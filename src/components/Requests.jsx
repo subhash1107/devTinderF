@@ -10,12 +10,7 @@ const Requests = () => {
   const token = localStorage.getItem('token1');
 
   const fetchRequests = async () => {
-    const res = await axios.get(BASE_URL + "/user/requests", {
-      headers:{
-        Authorization:`Bearer ${token}`,
-    },
-      withCredentials: true,
-    });
+    const res = await axios.get(BASE_URL + "/user/requests",);
     dispatch(addRequest(res.data));
     // console.log(res.data);
   };
@@ -26,11 +21,7 @@ const Requests = () => {
   const handleRequest = async (status,_id)=>{
    
     if(token){
-     await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},{
-      headers:{
-        Authorization:`Bearer ${token}`,
-    },
-    withCredentials:true})
+     await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},)
      dispatch(removeRequest(_id))
   }}
 

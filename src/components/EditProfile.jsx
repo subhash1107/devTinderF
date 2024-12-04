@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import UserCard from "./UserCard";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { setLoading } from "../utils/loadingSlice";
+import Loading from "./Loading";
 
 const EditProfile = ({ user }) => {
   const [firstName, setFirstName] = useState(user.firstName);
@@ -19,9 +21,11 @@ const EditProfile = ({ user }) => {
   const [toast, setToast] = useState(false);
 
   const dispatch = useDispatch();
+  const isLoading = useSelector((store)=>store.loading.isLoading)
 
   const saveDetails = async () => {
     try {
+      dispatch(setLoading(true))
       const formData = new FormData();
       const skillsArray =
         skills.length > 0 ? skills.split(",").map((skill) => skill.trim()) : [];
@@ -36,19 +40,9 @@ const EditProfile = ({ user }) => {
         formData.append("photo", photo);
       }else{console.log("no photo append");
       }
-          
-      const token = localStorage.getItem('token1');
-      if(token){
-      const res = await axios.patch(BASE_URL + "/profile/edit", formData, {
-        headers: { 
-          "Content-Type": "multipart/form-data" ,
-          Authorization:`Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
       
-      
-      dispatch(addUser(res.data));}
+      const res = await axios.patch(BASE_URL + "/profile/edit", formData,);  
+      dispatch(addUser(res.data));
       setError("");
       setToast(true);
       setTimeout(() => {
@@ -56,14 +50,18 @@ const EditProfile = ({ user }) => {
       }, 2000);
     } catch (error) {
       setError(error?.response?.data || "something went wrong ");
+    } finally{
+      dispatch(setLoading(false))
     }
   };
+
+  if(isLoading) return <Loading/>
 
   return (
     <>
       <div className="flex sm:justify-center sm:flex-row flex-col gap-3 bg-slate-50 py-4">
         <div>
-          <div className="card bg-base-100 w-96 shadow-xl mx-auto h-full">
+          <div className="card bg-base-100 w-full sm:w-96 shadow-xl mx-auto h-full">
             <div className="card-body">
               <h2 className="card-title mx-auto">Edit Profile</h2>
               <label htmlFor="editfirstname">First Name :</label>

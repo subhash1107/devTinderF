@@ -7,13 +7,9 @@ import { removeFeed } from '../utils/feedSlice'
 const UserCard = ({user}) => {
   const dispatch = useDispatch()
   const {_id,firstName, lastName, gender, age, about, photoUrl,skills} =user
-  const token = localStorage.getItem('token1');
   const handleSendRequest = async (status,_id)=>{
      try {
-      await axios.post(BASE_URL+"/request/send/"+status+"/"+_id,{},{
-        headers:{
-          Authorization:`Bearer ${token}`,
-      },withCredentials:true})
+      await axios.post(BASE_URL+"/request/send/"+status+"/"+_id,{},)
       dispatch(removeFeed(_id))
      } catch (error) {
       console.log(error);
@@ -23,7 +19,7 @@ const UserCard = ({user}) => {
 
   
   return (<>
-    <div className="card card-compact bg-base-100 sm:w-96  shadow-xl p-2">
+    <div className="card card-compact bg-base-200 sm:w-96  shadow-xl p-2">
   <figure>
     <img
       src={photoUrl}

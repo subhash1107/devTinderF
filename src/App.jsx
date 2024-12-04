@@ -9,8 +9,16 @@ import Feed from "./components/Feed";
 import Testing from "./components/Testing";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
+import axios from "axios";
 
 const App = () => {
+  const token = localStorage.getItem('token1')
+  if(token){
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    console.log(token);
+    
+  }
+  axios.defaults.withCredentials = true;
   return (
     <>
       <Provider store={appStore()}>

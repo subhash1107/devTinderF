@@ -1,34 +1,40 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
+import { setLoading } from "../utils/loadingSlice";
+import Loading from "./Loading";
+
 
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connections);
+  const isLoading = useSelector((store)=>store.loading.isLoading)
+  
 
   const fetchConnections = async () => {
     try {
-      const token = localStorage.getItem('token1');
-      if(token){
-      const res = await axios.get(BASE_URL + "/user/connections", {
-        headers:{
-          Authorization:`Bearer ${token}`,
-      },
-        withCredentials: true,
-      });
-      dispatch(addConnection(res.data.message));}
+      if(isLoading)return
+      dispatch(setLoading(true)); 
+      const res = await axios.get(BASE_URL + "/user/connections");
+      dispatch(addConnection(res.data.message)); 
     } catch (error) {
-      console.log(error);
+      console.log(error); 
+    } finally {
+      dispatch(setLoading(false));
     }
   };
+  
+  
   useEffect(() => {
     fetchConnections();
-  }, []);
-
+  }, []); 
+  
+  if (isLoading) return <Loading />;
+  
   if (!connections) return;
-  if (connections.length === 0) {
+  if (connections.length <= 0) {
     return (
       <>
         <div className="toast toast-center toast-middle">

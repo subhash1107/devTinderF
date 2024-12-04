@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { BASE_URL } from '../utils/constants';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
-import Cookies from 'js-cookie';
+import { setLoading } from '../utils/loadingSlice';
+import Loading from './Loading';
 
 const Login = () => {
     const [eMail, setEmail] = useState("");
@@ -17,24 +18,27 @@ const Login = () => {
     const [seePassword,setSeePassword] = useState(false) 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const isLoading = useSelector((store)=>store.loading.isLoading)
     
-
     const handleLogin = async ()=>{
       try {
-        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,},{withCredentials:true});
-         localStorage.setItem('token1', res.data.token);
-        // Cookies.set("token1",res.data.token)
+        dispatch(setLoading(true))
+        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
+        localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
         navigate("/feed")
         setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
         console.log("error ",err);   
+      } finally {
+        dispatch(setLoading(false))
       }
     }
     const handleSignup = async ()=>{
       try {
-        const res = await axios.post(BASE_URL+"/signup",{firstName:firstName,lastName:lastName,eMail:eMail,password:password},{withCredentials:true})
+        dispatch(setLoading(true))
+        const res = await axios.post(BASE_URL+"/signup",{firstName:firstName,lastName:lastName,eMail:eMail,password:password})
         localStorage.setItem('token1', res.data.token);
         setError("");
         dispatch(addUser(res.data.data))
@@ -42,12 +46,15 @@ const Login = () => {
       } catch (error) {
         setError(error?.response?.data ||"Something went wrong")
         console.log(error);
-        
+      } finally {
+        dispatch(setLoading(false))
       }
     }
+
+  if(isLoading) return <Loading/>  
   return (
     <div>
-    <div className="card bg-base-100 w-96 shadow-xl mx-auto my-6">
+    <div className="card bg-base-100 w-full sm:w-96 sm:shadow-xl mx-auto my-6">
   <div className="card-body">
     <h2 className="card-title mx-auto">{isSignup?"SIGN UP":"LOGIN"}</h2>
     

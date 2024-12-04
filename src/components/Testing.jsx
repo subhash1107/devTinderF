@@ -1,9 +1,19 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { setLoading } from '../utils/loadingSlice'
 
 const Testing = () => {
-    const user = useSelector((store)=>store.user)
-    user&&console.log(user);
+    const dispatch = useDispatch()
+    const isLoading = useSelector((store)=>store.loading.isLoading)
+    try{
+      if(isLoading) return
+       dispatch(setLoading(true))
+       console.log(isLoading);
+    }catch{}finally{
+
+      dispatch(setLoading(false));
+      console.log(isLoading)
+    }
     
   return (
     <div>Testing</div>

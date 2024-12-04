@@ -1,47 +1,37 @@
 import axios from 'axios'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {  BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
 import UserCard from './UserCard'
+import Loading from './Loading'
+import { setLoading } from '../utils/loadingSlice'
 
 const Feed = () => {
     const dispatch = useDispatch();
     const feed = useSelector((store)=>{return store.feed})
+    const isLoading = useSelector((store)=>store.loading.isLoading)
     // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));     
+
     const feedData = async ()=>{
+        dispatch(setLoading(true))
         try {
-            const token = localStorage.getItem('token1');
-            // const token = Cookies.get("token")
             if(feed) return;
-            if(token){
-                const res = await axios.get(BASE_URL + "/user/feed",{
-                    headers:{
-                        Authorization:`Bearer ${token}`,
-                    },
-                    withCredentials:true})
-                dispatch(addFeed(res.data.message));  
-            }else{
-                return "there is no token"
-            }
-            
+            const res = await axios.get(BASE_URL + "/user/feed",)
+            dispatch(addFeed(res.data.message)); 
         } catch (err) {
             console.log(err);
-            
+        } finally{
+            dispatch(setLoading(false));                                             
+
         }
-        
     }
      
-    useEffect(() => {
-        // Check if there's a token in localStorage
-        const token = localStorage.getItem('token1');
-        if (token) {
-          // If a token is found, attempt to fetch user data or feed
+    useEffect(() => {    
           feedData();
-        }
-      }, []); // Empty array means this runs once when the component mounts
+      }, [feed]); // Empty array means this runs once when the component mounts
       
-
+    if(isLoading) return <Loading/>
     if(!feed) return;
     if(feed.length===0){
         return(<>
