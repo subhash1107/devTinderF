@@ -25,8 +25,8 @@ const Requests = () => {
      dispatch(removeRequest(_id))
   }}
 
-  if (!foundRequests) return;
-  if (foundRequests.length === 0) {
+  
+  if (!foundRequests&&foundRequests.length === 0) {
     return (
       <>
         <div className="toast toast-center toast-middle">
@@ -47,7 +47,7 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className="card card-side bg-slate-100 shadow-xl md:max-w-[50%] mx-auto my-4"
+            className="card card-side bg-base-200 shadow-xl md:max-w-[50%] mx-auto my-4"
           >
             <figure>
               <img src={photoUrl} alt={firstName + " photo"} />
