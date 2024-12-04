@@ -1,6 +1,9 @@
 {
     "routes": [
-      { "src": "/assets/(.*)", "headers": { "Content-Type": "application/javascript" } },
+      { "src": "/assets/(.*)", "headers": { 
+          "Content-Type": "application/javascript",
+          "Cache-Control": "public, max-age=31536000, immutable"
+      }},
       { "src": "/(.*)", "dest": "/" }
     ]
   }
