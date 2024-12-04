@@ -7,23 +7,20 @@ import { addRequest, removeRequest } from "../utils/requestSlice";
 const Requests = () => {
   const dispatch = useDispatch();
   const foundRequests = useSelector((store) => store.requests);
-  const token = localStorage.getItem('token1');
+  
 
   const fetchRequests = async () => {
-    const res = await axios.get(BASE_URL + "/user/requests",);
-    dispatch(addRequest(res.data));
-    // console.log(res.data);
+    const res = await axios.get(BASE_URL + "/user/requests",);    
+    dispatch(addRequest(res.data.requests));
   };
   useEffect(() => {
     fetchRequests();
   }, []);
   
-  const handleRequest = async (status,_id)=>{
-   
-    if(token){
+  const handleRequest = async (status,_id)=>{  
      await axios.post(BASE_URL+"/request/review/"+status+"/"+_id,{},)
      dispatch(removeRequest(_id))
-  }}
+  }
 
   
   if (!foundRequests&&foundRequests.length === 0) {
