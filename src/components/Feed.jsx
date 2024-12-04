@@ -44,7 +44,7 @@ const Feed = () => {
     }
 
   return (<>
-  <div className='flex justify-center p-5 bg-slate-50'>
+  <div className='flex justify-center p-5 bg-base-100'>
     {feed&&<UserCard user = {feed[0]}/>}
     </div>
     </>)}

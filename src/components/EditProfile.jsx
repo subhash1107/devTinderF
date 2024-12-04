@@ -59,9 +59,9 @@ const EditProfile = ({ user }) => {
 
   return (
     <>
-      <div className="flex sm:justify-center sm:flex-row flex-col gap-3 bg-slate-50 py-4">
+      <div className="flex sm:justify-center sm:flex-row flex-col gap-3 bg-base-100 py-4">
         <div>
-          <div className="card bg-base-100 w-full sm:w-96 shadow-xl mx-auto h-full">
+          <div className="card bg-base-200 w-full sm:w-96 shadow-xl mx-auto h-full">
             <div className="card-body">
               <h2 className="card-title mx-auto">Edit Profile</h2>
               <label htmlFor="editfirstname">First Name :</label>
