@@ -24,8 +24,8 @@ const Login = () => {
     const handleLogin = async ()=>{
       try {
         dispatch(setLoading(true))
-        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
         handleClearCache();
+        const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
         navigate('/feed')
