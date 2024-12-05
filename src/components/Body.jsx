@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet, useLocation, useNavigate } from "react-router";
-import axios from '../utils/axiosConfig.js';
+import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
