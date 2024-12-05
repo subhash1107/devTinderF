@@ -14,7 +14,7 @@ const Navbar = () => {
     try {
        localStorage.removeItem("token1")
        dispatch(removeUser());
-       window.location.href = "/login";
+       window.location.replace = "/login";
     } catch (err) {
       console.log(err);
       
