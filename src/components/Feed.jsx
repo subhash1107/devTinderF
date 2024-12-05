@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {  BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
@@ -14,7 +14,7 @@ const Feed = () => {
     const isLoading = useSelector((store)=>store.loading.isLoading)
     // console.log('Feed array as JSON:', JSON.stringify(feed, null, 2));     
 
-    const feedData = async ()=>{
+    const feedData = useCallback(async ()=>{
         dispatch(setLoading(true))
         try {
             if(feed) return;
@@ -27,11 +27,11 @@ const Feed = () => {
             dispatch(setLoading(false));                                             
 
         }
-    }
+    },[feed, dispatch])
      
     useEffect(() => {    
           feedData();
-      }, []); // Empty array means this runs once when the component mounts
+      }, [feedData]); // Empty array means this runs once when the component mounts
       
     if(isLoading) return <Loading/>
     if(!feed) return;
