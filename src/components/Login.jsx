@@ -27,7 +27,9 @@ const Login = () => {
         dispatch(setLoading(true))
         
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
-        localStorage.setItem('token1', res.data.token);
+        const token = res.data.token;
+        localStorage.setItem('token1', token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         dispatch(addUser(res.data.user))
         
         navigate('/feed')
@@ -43,7 +45,9 @@ const Login = () => {
       try {
         dispatch(setLoading(true))
         const res = await axios.post(BASE_URL+"/signup",{firstName:firstName,lastName:lastName,eMail:eMail,password:password})
-        localStorage.setItem('token1', res.data.token);
+        const token = res.data.token;
+        localStorage.setItem('token1', token);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         setError("");
         dispatch(addUser(res.data.data))
         navigate('/profile')
