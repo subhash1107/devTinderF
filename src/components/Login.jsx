@@ -26,7 +26,7 @@ const Login = () => {
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
-        navigate("/feed")
+        window.location.replace = "/feed";
         setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
@@ -42,7 +42,7 @@ const Login = () => {
         localStorage.setItem('token1', res.data.token);
         setError("");
         dispatch(addUser(res.data.data))
-        navigate("/profile")
+        window.location.replace = "/profile";
       } catch (error) {
         setError(error?.response?.data ||"Something went wrong")
         console.log(error);
