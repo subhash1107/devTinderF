@@ -20,6 +20,7 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const isLoading = useSelector((store)=>store.loading.isLoading)
+    const user = useSelector(store=>store.user)
     
     const handleLogin = async ()=>{
       try {
@@ -28,7 +29,8 @@ const Login = () => {
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
-        navigate('/feed')
+        if(user){
+        navigate('/feed')}
         setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
