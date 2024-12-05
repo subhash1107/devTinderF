@@ -27,6 +27,7 @@ const Login = () => {
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
         window.location.replace = "/feed";
+        navigate('/feed')
         setError("")
       } catch (err) {
         setError(err?.response?.data || "Something went wrong")
