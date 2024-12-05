@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../utils/axiosConfig.js';
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { BASE_URL } from '../utils/constants'
