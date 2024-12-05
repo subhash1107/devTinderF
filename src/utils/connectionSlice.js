@@ -8,8 +8,9 @@ const connectionSlice = createSlice({
             return action.payload;
         },
         removeConnection:(state,action)=>{
-            return null;
-        }
+            return [];
+        },
+        
     }
 })
 export const {addConnection,removeConnection}=connectionSlice.actions;

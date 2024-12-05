@@ -18,7 +18,7 @@ const Feed = () => {
         dispatch(setLoading(true))
         try {
             if(feed) return;
-            handleClearCache();
+            
             const res = await axios.get(BASE_URL + "/user/feed",)
             dispatch(addFeed(res.data.message)); 
         } catch (err) {

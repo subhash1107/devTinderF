@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL } from '../utils/constants'
 import { removeUser } from '../utils/userSlice'
+import { clearRequest } from '../utils/requestSlice'
+import { removeConnection } from '../utils/connectionSlice'
 
 
 const Navbar = () => {
@@ -14,7 +16,9 @@ const Navbar = () => {
     try {
        localStorage.removeItem("token1")
        dispatch(removeUser());
-       window.location.replace = "/login";
+       dispatch(clearRequest());
+       dispatch(removeConnection());
+       navigate('/login')
     } catch (err) {
       console.log(err);
       

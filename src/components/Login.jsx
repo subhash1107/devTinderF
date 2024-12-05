@@ -24,8 +24,8 @@ const Login = () => {
     const handleLogin = async ()=>{
       try {
         dispatch(setLoading(true))
-        handleClearCache();
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
+        handleClearCache();
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
         navigate('/feed')
@@ -44,7 +44,7 @@ const Login = () => {
         localStorage.setItem('token1', res.data.token);
         setError("");
         dispatch(addUser(res.data.data))
-        window.location.replace = "/profile";
+        navigate('/profile')
       } catch (error) {
         setError(error?.response?.data ||"Something went wrong")
         console.log(error);
