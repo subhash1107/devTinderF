@@ -6,6 +6,7 @@ import { removeUser } from '../utils/userSlice'
 import { clearRequest } from '../utils/requestSlice'
 import { removeConnection } from '../utils/connectionSlice'
 import { clearFeed } from '../utils/feedSlice'
+import handleClearCache from '../utils/handleClearCache'
 
 
 
@@ -21,6 +22,7 @@ const Navbar = () => {
        dispatch(clearRequest());
        dispatch(removeConnection());
        dispatch(clearFeed())
+       handleClearCache
        navigate('/login')
     } catch (err) {
       console.log(err);
