@@ -31,7 +31,7 @@ const Feed = () => {
      
     useEffect(() => {    
           feedData();
-      }, [feed]); // Empty array means this runs once when the component mounts
+      }, []); // Empty array means this runs once when the component mounts
       
     if(isLoading) return <Loading/>
     if(!feed) return;
