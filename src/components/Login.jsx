@@ -7,6 +7,7 @@ import { BASE_URL } from '../utils/constants';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa';
 import { setLoading } from '../utils/loadingSlice';
 import Loading from './Loading';
+import handleClearCache from '../utils/handleClearCache';
 
 const Login = () => {
     const [eMail, setEmail] = useState("");
@@ -23,10 +24,10 @@ const Login = () => {
     const handleLogin = async ()=>{
       try {
         dispatch(setLoading(true))
+        handleClearCache();
         const res = await axios.post(BASE_URL+"/login",{eMail:eMail,password:password,});
         localStorage.setItem('token1', res.data.token);
         dispatch(addUser(res.data.user))
-        window.location.replace = "/feed";
         navigate('/feed')
         setError("")
       } catch (err) {

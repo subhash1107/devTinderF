@@ -6,6 +6,7 @@ import { addFeed } from '../utils/feedSlice'
 import UserCard from './UserCard'
 import Loading from './Loading'
 import { setLoading } from '../utils/loadingSlice'
+import handleClearCache from '../utils/handleClearCache'
 
 const Feed = () => {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const Feed = () => {
         dispatch(setLoading(true))
         try {
             if(feed) return;
+            handleClearCache();
             const res = await axios.get(BASE_URL + "/user/feed",)
             dispatch(addFeed(res.data.message)); 
         } catch (err) {
