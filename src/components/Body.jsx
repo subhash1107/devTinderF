@@ -20,7 +20,7 @@ const Body = () => {
   const getUser = async () => {
     try {
       if (userData || location.pathname==="/login") return;
-      dispatch(setLoading(true))
+      // dispatch(setLoading(true))
       const user = await axios.get(BASE_URL + "/profile/view",);
       dispatch(addUser(user.data));
     } catch (err) {
@@ -29,13 +29,13 @@ const Body = () => {
       }
       console.log(err);
     } finally {
-      dispatch(setLoading(false))
+      // dispatch(setLoading(false))
     }
   };
   useEffect(() => {
     getUser();
   }, []);
-  if(isLoading) return <Loading/>
+  // if(isLoading) return <Loading/>
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

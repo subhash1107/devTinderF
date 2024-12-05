@@ -22,7 +22,7 @@ const Navbar = () => {
        dispatch(clearRequest());
        dispatch(removeConnection());
        dispatch(clearFeed())
-       handleClearCache
+       handleClearCache()
        navigate('/login')
     } catch (err) {
       console.log(err);
