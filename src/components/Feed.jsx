@@ -30,7 +30,10 @@ const Feed = () => {
     }
      
     useEffect(() => {    
+        const token = localStorage.getItem("token1")
+        if(token){
           feedData();
+        }
       }, []); // Empty array means this runs once when the component mounts
       
     if(isLoading) return <Loading/>
