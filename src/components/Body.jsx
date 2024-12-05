@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { setLoading } from "../utils/loadingSlice";
 import Loading from "./Loading";
+import handleClearCache from "../utils/handleClearCache";
 
 const Body = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Body = () => {
       dispatch(addUser(user.data));
     } catch (err) {
       if (err.status) {
+        handleClearCache()
         navigate("/login");
       }
       console.log(err);
