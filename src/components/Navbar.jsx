@@ -14,7 +14,7 @@ const Navbar = () => {
     try {
        localStorage.removeItem("token1")
        dispatch(removeUser());
-       return navigate("/login")
+      //  return navigate("/login")
     } catch (err) {
       console.log(err);
       
@@ -46,7 +46,7 @@ const Navbar = () => {
         </li>
         <li><Link to="/connections">Connections</Link></li>
         <li><Link to="/requests">Requests</Link></li>
-        <li><a onClick={handleLogout}>Logout</a></li>
+        <li><a onClick={handleLogout} href='/login'>Logout</a></li>
       </ul>
     </div>
   </div>)}
