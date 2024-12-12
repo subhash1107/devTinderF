@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequest, removeRequest } from "../utils/requestSlice";
@@ -8,7 +8,6 @@ const Requests = () => {
   const dispatch = useDispatch();
   const foundRequests = useSelector((store) => store.requests);
   
-
   const fetchRequests = async () => {
     const res = await axios.get(BASE_URL + "/user/requests",);    
     dispatch(addRequest(res.data.requests));
@@ -44,16 +43,21 @@ const Requests = () => {
         return (
           <div
             key={_id}
-            className="card card-side bg-base-200 shadow-xl md:max-w-[50%] mx-auto my-4"
+            className="card card-side bg-base-200 shadow-xl md:max-w-[70%] lg:max-w-[60%] xl:max-w-[50%] mx-auto my-4"
           >
-            <figure>
-              <img src={photoUrl} alt={firstName + " photo"} />
+            <figure className="w-[40%]">
+              <img src={photoUrl} alt={firstName + " photo"} className="object-cover" />
             </figure>
             <div className="card-body">
               <h2 className="card-title">{firstName + " " + lastName}</h2>
-              {age && <p>Age: {age}</p>}
-              {gender && <p>{gender}</p>}
-              {about && <p>{about}</p>}
+              {age && <p >Age: {age}</p>}
+              {gender && <p >{gender}</p>}
+              {about && 
+                <p 
+                className="hidden sm:block"
+              >{about}
+                </p>
+                }
               <div className="card-actions justify-end">
                 <button 
                 className="btn btn-circle btn-outline text-red-500"
