@@ -12,13 +12,13 @@ import Requests from "./components/Requests";
 import axios from "axios";
 
 const App = () => {
-  useEffect(()=>{
+  
     axios.defaults.withCredentials = true;
     const token = localStorage.getItem("token1")
     if(token){
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
-  },[])
+  
   return (
     <>
       <Provider store={appStore()}>
