@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "../utils/connectionSlice";
@@ -54,11 +54,11 @@ const Connections = () => {
           <div 
           key={_id} 
           className="card card-side bg-base-200 shadow-xl md:max-w-[50%] mx-auto my-4">
-            <figure className="md:w-[40%] sm:w-[30%] w-[25%] ">
+            <figure className="md:w-[40%] sm:w-[30%] w-[25%] overflow-hidden ">
               <img
                 src={photoUrl}
                 alt={firstName+" photo"}
-                className="object-cover w-full h-full"
+                className="object-fill w-full h-full"
               />
             </figure>
             <div className="card-body">
