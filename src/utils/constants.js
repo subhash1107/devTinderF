@@ -1,4 +1,4 @@
 // export const BASE_URL = "https://devtinderb.onrender.com";
 // export const BASE_URL = "http://localhost:8000";
-export const BASE_URL = "http://65.0.169.131:8000";
+export const BASE_URL = "https://65.0.169.131/api";
 
